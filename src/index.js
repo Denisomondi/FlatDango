@@ -25,3 +25,29 @@ function renderMovieList(movie) {
     li.classList.add('item');
     li.addEventListener("click", () => {handleMovieClick(movie)})
 }
+
+
+function handleMovieClick(movie) {
+    const poster = document.querySelector("img#poster")
+    poster.src = movie.poster;
+    poster.alt = movie.title;
+    const info = document.querySelector("#showing");
+    info.querySelector("#title").textContent = movie.title;
+    info.querySelector("#runtime").textContent = movie.runtime+" minutes";
+    info.querySelector("#film-info").textContent = movie.description;
+    info.querySelector("#showtime").textContent = movie.showtime;
+    info.querySelector("#ticket-num").textContent = movie.capacity - movie.tickets_sold + " remaining tickets";
+}
+
+function handleBuyTicket(e) {
+    const ticketDiv = document.querySelector("#ticket-num");
+    const tickets = ticketDiv.textContent.split(" ")[0];
+    if (tickets > 0) {
+        ticketDiv.textContent = tickets - 1 + " remaining tickets";
+    }
+    else if (tickets == 0) {
+        alert("No more tickets!");
+        e.target.classList.add("sold-out");
+        e.target.classList.remove("orange");
+    }
+}
